@@ -1,0 +1,15 @@
+//230. Kth Smallest Element in a BST
+//pattern  : inorder traversal.
+
+since inorder trversal will go small->med->large for bst's, so just traversing the first k nodes will give the element.
+
+ int kthSmallest(TreeNode* root, int k) {
+        stack <TreeNode *> s;
+        while(root || s.size()) {
+            while(root) s.push(root), root = root->left;
+            root = s.top(), s.pop();
+            if(--k == 0) break;
+            root = root->right;
+        }
+        return root->val;
+    } 

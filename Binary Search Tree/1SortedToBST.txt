@@ -1,0 +1,30 @@
+Problem -> sorted array elements to HEIGHT BALANCED TREE.( Diff between two subtree heights<=1 )
+
+concept  :  
+	  1 : Get middle element to be the root of the tree so that diff between no of elements in two sides <= 1(balanced)
+	  2 : define it recursively 
+	  3 : BST property is also satisfied since the array is sorted
+
+Time = O(n) ,n = size of array
+
+    TreeNode* newnode(int key) {//newnode creation
+        TreeNode *temp = (TreeNode *)malloc(sizeof(TreeNode));
+        temp->val = key;
+        temp->left = temp->right=nullptr;
+        return temp;
+    }
+    
+    TreeNode *solve(vector<int>& nums,int l,int r) {//Creating the BST
+        if(l>r) return nullptr;
+        int m = l + (r-l)/2;
+        TreeNode *root = newnode(nums[m]);
+        root->left = solve(nums,l,m-1); //defining recursively
+        root->right = solve(nums,m+1,r);//defining recursively
+        return root;
+    }
+    
+    
+    
+    TreeNode* sortedArrayToBST(vector<int>& nums) {//calling the function
+        return solve(nums,0,nums.size()-1);
+    }

@@ -1,0 +1,23 @@
+//653. Two Sum IV - Input is a BST
+
+time : O(nlogn) 
+logn time for searching a node, and doing it for n nodes.
+
+space: O(h), h = height.
+h will decide the number of functions called recursively, and it will decide the stack space usage.
+
+Concept : It's about taking a node at a time, and searching the whole tree whether k - node->val value is present or not.
+
+
+ bool findTarget(TreeNode* root, int k) {
+        return dfs(root, root, k);
+    }
+    bool dfs(TreeNode *root, TreeNode *cur, int k) {
+        if(!cur) return false;
+        return search(root, cur, k-cur->val) || dfs(root, cur->left, k) || dfs(root, cur->right, k);
+    }
+    bool search(TreeNode *root, TreeNode *cur, int key) {
+        if(!root) return false;
+        return (root->val == key) && (root != cur) || root->val < key && search(root->right, cur, key) 
+                || root->val > key && search(root->left, cur, key);
+    }

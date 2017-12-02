@@ -1,0 +1,69 @@
+Approach 1: O(n) space, O(1) time.
+space O(n) for storing the n nodes in the tree. Used queue for this.
+
+***************************************************
+ queue <TreeNode *> q;
+    
+    void inorder(TreeNode *root) {
+        if(!root) return;
+        inorder(root->left), q.push(root), inorder(root->right);
+    }
+    
+    BSTIterator(TreeNode *root) {
+        inorder(root);
+    }
+
+    /** @return whether we have a next smallest number */
+    bool hasNext() {
+        return q.size() != 0;
+    }
+
+    /** @return the next smallest number */
+    int next() {
+        int v = q.front()->val; q.pop();
+        return v;
+    }
+
+****************************************************
+Approach 2: O(h) space, O(1) time.
+stack is used during height time order.
+
+ stack <TreeNode *> s;
+    BSTIterator(TreeNode *root) {
+        fun(root);
+    }
+    void fun(TreeNode *root) {
+        while(root) s.push(root), root=root->left;
+    }
+
+    /** @return whether we have a next smallest number */
+    bool hasNext() {
+       return s.size()!=0;
+    }
+
+    /** @return the next smallest number */
+    int next() {
+       TreeNode *node = s.top();
+        s.pop();
+        fun(node->right); return node->val;
+    } 
+
+********************************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

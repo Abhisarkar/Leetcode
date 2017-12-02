@@ -1,0 +1,16 @@
+
+
+ void rev_inorder(TreeNode *root, int &sum) {
+        if(!root) return;
+        rev_inorder(root->right,sum);
+        sum += root->val;
+        root->val=sum;
+        rev_inorder(root->left,sum);
+     }
+    
+    TreeNode* convertBST(TreeNode* root) {
+        if(!root) return root;
+        int sum=0;
+        rev_inorder(root,sum);
+        return root;
+    }

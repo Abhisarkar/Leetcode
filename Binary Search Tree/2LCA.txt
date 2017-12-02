@@ -1,0 +1,11 @@
+TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(!root) return root;
+        
+        else if( p->val < root->val && q->val < root->val )//both values are smaller
+            return lowestCommonAncestor(root->left,p,q); //search in left subtree
+        else if( p->val > root->val && q->val > root->val )//both values are larger
+            return lowestCommonAncestor(root->right,p,q); //search in right subtree
+        else//lies in two subtrees
+            return root; //else return the root itself
+        
+    }

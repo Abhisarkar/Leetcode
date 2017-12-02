@@ -1,0 +1,14 @@
+//669. Trim a Binary Search Tree 
+
+Concept is that if it's < l, then according to bst property all the left elements will also be less, so return right, and vice versa.
+It starts deleting from the leaves.
+
+ TreeNode* trimBST(TreeNode* root, int l, int r, bool top = true) {
+        if( !root ) return nullptr;
+        root->left  = trimBST(root->left, l, r, false);
+        root->right = trimBST(root->right, l, r, false);
+        if(root->val >= l && root->val <= r) return root;//if inside the range return root, because both the left and right subtrees are trimmed.
+        TreeNode *result = root->val < l ? root->right : root->left;//root is outside the range, so any one subtrees will be inside the range.
+        if(!top) delete root; // deleting the root, it's done from the leaves all the way up.
+        return result;
+    }
