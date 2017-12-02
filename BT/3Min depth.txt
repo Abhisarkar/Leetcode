@@ -1,0 +1,27 @@
+//Mindepth = Minimum Number of nodes to the nearest leaf from root node.
+int minDepth(TreeNode* root) {
+	//if root is zero,no node,so no. of nodes = 0
+            if(root == NULL) return 0;
+	
+	//if both childnodes are present,so find the minimum depth among both the childs and return.	
+             	else if(root->left && root->right)
+             		return min( minDepth(root->left),minDepth(root->right) )+1;
+
+	//if right node is not there,then continue with the left node and find the minimum depth for that left child.
+	//case  : root(1) -> left(2) : mindepth = 2
+
+           		 else if(root->left && !root->right)
+             		return minDepth(root->left)+1;
+
+	//if left node is not there,then continue with the right node and find the minimum depth for that right child.
+	//case  : root(1) -> right(2) : mindepth = 2
+
+            		 else if(!root->left && root->right)
+            			 return minDepth(root->right)+1;
+            
+	//if no child nodes are present then just count the root and return the value.
+	else if(!root->left && !root->right)
+            		 return 1(for root node);
+
+             
+    }

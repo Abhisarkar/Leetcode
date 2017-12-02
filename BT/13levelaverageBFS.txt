@@ -1,0 +1,22 @@
+Important thing I learnt -> for traversing over elements levelwise.
+Problem I faced -> how to traverse over elements such that next level elements do not come.
+
+vector<double> averageOfLevels(TreeNode* root) {
+        
+        queue<TreeNode *> q;
+        vector <double> ans;
+        q.push(root);
+        while(!q.empty()) {
+            long temp=0;
+            int s = q.size();
+            for(int i=0;i<s;++i) {//it is really good technique to traverse over the level elements.
+			   //s here is the number of elements in that level.
+                TreeNode *p = q.front();q.pop();
+                if(p->left) q.push(p->left);
+                if(p->right) q.push(p->right);
+                temp += p->val;//accessing the values in that level
+            }
+            ans.push_back((double)temp/s);
+        }
+     return ans;        
+    }

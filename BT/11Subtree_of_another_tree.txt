@@ -1,0 +1,27 @@
+//the main concept is we have to traverse the whole tree and the subtree can be present in any of both the subtrees.
+//and while checking the if subtree is present we have to check both the subtrees of the main tree.
+
+//In this kind of situations where resultis found in any one(for e.g left subtree)  BUT have to present in both the subtree
+(inside left subtree) confusions come for the usage of && and || operators.
+
+//SOLUTION -> Use TWO functions 1 : For traversing the tree 2 : for checking if present in this subtree.
+
+    bool isSubtree(TreeNode* s, TreeNode* t) {
+        if(!s && !t) return true;
+        if(!t) return true;
+        if(!s) return false;
+        
+        return isPresent(s,t) || isSubtree(s->left,t) || isSubtree(s->right,t);
+    }
+    
+    
+
+    bool isPresent(TreeNode *s,TreeNode *t) {//this function checks if subtree t is present in the tree starting with node s.
+        if(!s && !t) return true;
+		//we have reached end and since it can be possible if the earlier elements are SAME(condition in this function)
+        
+        if(!s || !t) return false;//if any one node is null,means t is not present here.
+        
+        if(s->val != t->val) return false;//value NOT EQUAL
+        else return isPresent(s->left,t->left) && isPresent(s->right,t->right);//Have to be same in both the subtrees
+    }

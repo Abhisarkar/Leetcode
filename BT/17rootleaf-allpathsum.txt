@@ -1,0 +1,19 @@
+
+
+void findsum( TreeNode *root, int &sum, int s ) {
+        
+        if(!root) return;
+        s = s*10 + root->val;//for only this level(er pore child node e ei sum pathabo)
+        if(!root->left && !root->right) {
+            sum += s; return;
+        }
+        findsum(root->left,sum,s);//passing this level status to next level.
+        findsum(root->right,sum,s);//same
+    }
+    
+    int sumNumbers(TreeNode* root) {
+        if(!root) return 0;
+        int sum=0,s=0;
+        findsum(root,sum,s);
+        return sum;
+    }

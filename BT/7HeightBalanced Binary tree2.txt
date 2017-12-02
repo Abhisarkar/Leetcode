@@ -1,0 +1,23 @@
+//For the current node root, calling depth() for its left and right children actually has to access all of its children
+// thus the complexity is O(N). 
+//We do this for each node in the tree, so the overall complexity of isBalanced will be O(N^2). This is a top down approach.
+//Algorithm is : 1 : calculate depth for left child. (TRAVERSES ALL NODES IN LEFT SUBTREE)
+	         2 : calculate depth for right child (TRAVERSES ALL NODES IN RIGHT SUBTREE)    //so O(N)
+	         3 : check difference 
+	         4 : pass it to childs isBalanced(root->left) && isBalanced(root->right) //Again this Happens for all the child nodes ,Time : O(N)
+	         5 : Overall Time :-> O(N^2)
+
+
+int depth (TreeNode *root) {
+        if (root == NULL) return 0;
+        return max (depth(root -> left), depth (root -> right)) + 1;
+    }
+
+    bool isBalanced (TreeNode *root) {
+        if (root == NULL) return true;
+        
+        int left=depth(root->left);
+        int right=depth(root->right);
+        
+        return abs(left - right) <= 1 && isBalanced(root->left) && isBalanced(root->right);
+    }

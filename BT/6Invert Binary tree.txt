@@ -1,0 +1,21 @@
+//happens through level order BFS.
+//inversion is done TOP-DOWN,i.e first the childs of the root are swapped then subsequent childs are swapped. 
+
+TreeNode* invertTree(TreeNode* root) {
+        
+        if(!root) return root;
+        queue <TreeNode *> q;
+        q.push(root);
+        while(!q.empty()) {
+            
+            TreeNode *cur = q.front();q.pop();
+            if(cur->left) q.push(cur->left);//insert left child
+            if(cur->right) q.push(cur->right);//right child if not null
+            swap(cur->left,cur->right);//swap the addresses to the nodes so that the subtrees below them are also swapped.
+            
+//link : https://www.quora.com/I-wonder-why-we-swap-links-to-swap-two-nodes-instead-of-swapping-the-values-in-the-nodes
+        
+	}
+        return root;
+        
+    }

@@ -1,0 +1,18 @@
+ 
+       1
+     /   \
+    2     3  answer = 1(2()(4))(3)
+     \  
+      4 
+
+Solving recursively : -> get both chlid values,then wrap em up with the braces.
+
+string tree2str(TreeNode* t) {
+        if(!t) return "";
+        string str = to_string(t->val);
+        if(!t->left && !t->right) return str;
+        else if(!t->left && t->right) str = str + "()(" + tree2str(t->right)+")";
+        else if(t->left && !t->right) str = str + "(" + tree2str(t->left) + ")";
+        else str = str + "(" + tree2str(t->left) + ")(" + tree2str(t->right) + ")";
+        return str;
+     }

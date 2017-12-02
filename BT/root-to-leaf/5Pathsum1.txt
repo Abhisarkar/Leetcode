@@ -1,0 +1,26 @@
+//one mistake i did was I didnot specifically take the cases where One child is NULL.
+//Tree also containes -ve elements. 
+
+bool check(TreeNode* root,int sum_so_far,int sum){
+            
+            if(root == NULL) return false;
+	//If sum including this nodevalue is equal and the node is a leaf Node(path to leaf it's mentioned) then path found.
+            else if(sum_so_far+root->val == sum && !root->left && !root->right) return true;
+        
+       	//if both childs are present
+            if(root->left && root->right)
+                return check(root->left,sum_so_far+root->val,sum) ||check(root->right,sum_so_far+root->val,sum);
+            //one of the childs present
+	else if(!root->left && root->right)
+                return check(root->right,sum_so_far+root->val,sum);
+            else if(root->left && !root->right)
+                return check(root->left,sum_so_far+root->val,sum);
+            else//leaf node and sum is not equal to the required sum
+                return false;
+       
+        
+    }
+    
+    bool hasPathSum(TreeNode* root, int sum) {
+        return check(root,0,sum);//initial sum_so_far is zero.
+    }

@@ -1,0 +1,8 @@
+bool isSameTree(TreeNode* p, TreeNode* q)
+    {
+        if(p == NULL && q == NULL) return true;//if both roots are null
+        else if( (p != NULL && q == NULL) || (p == NULL && q != NULL) ) return false;//unequal tree
+        return (p->val == q->val) && (isSameTree(p->left,q->left)) && (isSameTree(p->right,q->right));
+        //both values are equal and property holds for both left and right nodes of the root.
+        
+    }

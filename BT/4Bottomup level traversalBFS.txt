@@ -1,0 +1,24 @@
+//for bottomup just reverse the vector after inserting elements in level order
+vector<vector<int>> levelOrderBottom(TreeNode * root)
+{
+    vector<vector<int>> res;//contains level order
+    if(root == NULL) return res;//no node
+    queue <TreeNode  *> q;//containes nodes
+    q.push(root);
+    while(!q.empty())
+    {
+        int l = q.size();//push the count of nodes present in that node
+        vector <int> curlayer;//containes the nodes present in current level node
+        for(int i=0;i<l;++i)//accessing each node in that level
+        {
+           TreeNode  *cur = q.front();
+           q.pop();
+           curlayer.push_back(cur->val);//pushing each value present in corresponding level
+           if(cur->left) q.push(cur->left);//if left node is not empty,push pointer to left child
+           if(cur->right) q.push(cur->right);//same as left child.
+        }
+        res.push_back(curlayer);//push all the elements present in that level
+    }
+    reverse(res.begin(),res.end());//last level elements comes first.
+    return res;
+}

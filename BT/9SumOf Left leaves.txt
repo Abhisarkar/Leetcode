@@ -1,0 +1,23 @@
+void solve(TreeNode *root,int &sum ) {
+        
+        if(root->left) {
+            
+            if(!root->left->left && !root->left->right)//Just checking upor thika if left child is leaf or not.
+                sum += root->left->val;//if leaf add to sum,notice sum is passed as address,so updation is recorded.
+            else
+                solve(root->left,sum);//if not leaf,go to it's left child..
+        }
+        if(root->right) {//goto right child if exists.
+            
+            solve(root->right,sum);
+            
+        }
+        
+    }
+    
+    int sumOfLeftLeaves(TreeNode* root) {
+        if(!root) return 0;
+        int sum=0;
+        solve(root,sum);
+        return sum;
+    }

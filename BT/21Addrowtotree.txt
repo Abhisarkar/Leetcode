@@ -1,0 +1,40 @@
+//Adding row to the tree,kept count to keep track of the level.
+
+TreeNode *newnode(int v) {
+        TreeNode *temp = (TreeNode *)malloc(sizeof(TreeNode));
+        temp->val=v;
+        temp->left=temp->right=nullptr;
+        return temp;
+    }
+    
+    TreeNode* addOneRow(TreeNode* root, int v, int d) {
+        if(d==1) {
+            TreeNode *temp = newnode(v);
+            temp->left=root;
+            return temp;
+        }
+        queue <TreeNode *> q;
+        q.push(root);
+        int cnt=0;
+        while(!q.empty()) {
+            int len = q.size();
+            cnt++;
+            if(cnt == d-1) {
+                for(int i=0;i<len;++i) {
+                    TreeNode *temp =q.front();q.pop();
+                    TreeNode *node1 = newnode(v);TreeNode *node2 = newnode(v);//two new nodes for each node of the previous level.
+                   
+                    node1->left=temp->left;temp->left=node1;q.push(node1);
+                    node2->right=temp->right;temp->right=node2;q.push(node2);
+                }
+            }
+            else {
+                for(int i=0;i<len;++i) {
+                    TreeNode *temp =q.front();q.pop();
+                    if(temp->left) {q.push(temp->left);}
+                    if(temp->right) {q.push(temp->right);}
+                }
+            }
+        }
+        return root;
+    }

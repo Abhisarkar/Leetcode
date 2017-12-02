@@ -1,0 +1,37 @@
+Problem:pathsum2,return the paths leading to a required sum in a 2D vector.
+
+Most frequent(and one of the most important) doubt I had  -> 
+	1 : While selecting path elements, how to know if selecting this element will lead to the desired path.???
+	2 : Wheather to push the element or not?
+	3 : And if selected and it does not give desired sum,how to remove it from the path element containing vector?
+
+Okay,
+	1 : One can't know what lies ahead, so one must be very well prepared for it.	
+		1: my thinking pattern is adding the elements and checking if it leads to the required sum.
+		2: it requires an additional variable.
+		3: A BETTER way would be to subtract the node values and when encountered with a leaf,
+		    and checking if the remaining sum is equal to the leaf.If equal we push it to the 2D vector.
+	2 : Yes, I have to push the element to the vector.(check all possible combination).
+	3 : Popping out starts after we reach a certain leaf node.if the remaining sum is equal to the leaf	then we push the
+	     path to 2D vector and then pop the leaf(after checking two of it's null child nodes),and then continue with 
+	     the other child node.
+	   
+	//Main gets the work done function 	
+   	void findpaths(vector<vector<int>> &paths, vector<int> &path, int sum, TreeNode *root) {
+       	 	if(!root) return;
+        		path.push_back(root->val);	//answer to doubt 2,yes.
+        		if( !root->left && !root->right && sum == root->val )
+            			paths.push_back(path); //if remaining sum is equal to leaf then path found,and inserted to 2D vector.
+        		findpaths(paths,path,sum-root->val,root->left);	//we check in the child nodes with remaining sum 
+						            	//assuming this nodes value is included to the path.
+        		findpaths(paths,path,sum-root->val,root->right);//same thing bro.
+       	 	path.pop_back(); 	//after work done with this current node,pop it out.
+			           	//It's better to visualize this step from a leaf node.       
+    	}	
+    	
+    	vector<vector<int>> pathSum(TreeNode* root, int sum) {//prepares the working zone function
+        		vector <vector<int>> paths;
+        		vector <int> path;
+        		findpaths(paths,path,sum,root);
+       	 	return paths;
+    	}
