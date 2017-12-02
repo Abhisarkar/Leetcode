@@ -1,0 +1,9 @@
+//maxdepth = max num of nodes along the tree.
+int maxDepth(TreeNode* root) 
+{
+             if(root == NULL) return 0;//if root is null then no. of nodes along the lines is zero
+             else
+                     return max( maxDepth(root->left) , maxDepth(root->right) ) + 1;
+		//passing to the next level.
+		//here +1 is because root node is counted in the path since root is not null.						  
+}

@@ -1,0 +1,44 @@
+int max1(int a,int b,int c) {return max(max(a,b),max(b,c));}
+    
+int depth(TreeNode *root) {//depth of one tree
+        if(!root) return 0;
+        return max(depth(root->left),depth(root->right))+1 ; //this ONE(1) here is the edge joining the root to it's child node.
+        }						   //if the child node exists then obviously it'll be connected through
+						   //the link(1 edge).
+     							   
+    int diameterOfBinaryTree(TreeNode* root) {
+             if(!root) return 0;
+        
+	int res = depth(root->left) + depth(root->right);
+		 //maximum diameter through root.
+        
+	return max1(res,diameterOfBinaryTree(root->left),diameterOfBinaryTree(root->right));
+       		 //traversing every node to keep track of the maximum diameter thrugh this node.
+    
+}
+
+//My solution :
+
+void func(TreeNode *root, int &m) {
+        if(!root) return;
+        int l =0, r = 0;
+        if(root->left) l = 1 + helper(root->left);// 1 added for the edge for left child
+        if(root->right) r = 1 + helper(root->right);
+        m = max(m,l+r); // for the maximum length diameter as diameter may not pass through root.
+        func(root->left, m); func(root->right, m);
+    }
+    
+    int helper(TreeNode *root) {//gets the maximum from left and right subtree.
+        if(!root) return 0;
+        int l = 0, r = 0;
+        if(root->left) l = 1 + helper(root->left);
+        if(root->right) r = 1 + helper(root->right);
+        return max(l,r); // return the maximum.
+    }
+    
+    int diameterOfBinaryTree(TreeNode* root) {
+        if(!root) return 0;
+        int m = INT_MIN;
+        func(root,m);
+        return m;
+    }

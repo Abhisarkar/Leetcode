@@ -1,0 +1,27 @@
+//At each node,left and right nodes are examined.
+//if not null,then their values are added,and sent to the nodes.
+//if both childs are null then string so far is added to the vector.
+
+//there is no logic for e.g one path is maintained and nodes are deleted and added to this main string.(My earlier assumption).
+
+void path1(vector <string> &vec,TreeNode *root,string path) {
+            
+        if(!root->left && !root->right) {
+            
+            vec.push_back(path);
+            return;
+        }
+         if(root->left)
+            path1(vec,root->left,path+"->"+to_string(root->left->val));
+         if(root->right)
+            path1(vec,root->right,path+"->"+to_string(root->right->val));
+        
+        
+    }
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector <string> vec;
+        if(!root) return vec;
+        
+        path1(vec,root,to_string(root->val));
+        return vec;
+    }

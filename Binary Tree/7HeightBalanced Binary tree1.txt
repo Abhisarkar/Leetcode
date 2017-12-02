@@ -1,0 +1,23 @@
+//This is a O(n) solution
+//It takes a DFS approach and goes to the leftmost child,calculates,returnes,calculates right child,returns,return node value.
+//It is calculating the height and checking the difference in ONE step for one node.
+
+    int height(TreeNode *root) {
+        
+        if( root==NULL ) return 0;
+        
+        int left = height(root->left);
+        if(left==-1) return -1;
+        int right = height(root->right);
+        if(right==-1) return -1;
+        
+        if( abs(left-right) > 1 ) return -1;
+        else
+            return max(left,right)+1;
+     }
+    
+    
+     bool isBalanced(TreeNode* root) {
+        return height(root)!=-1;
+        }
+    

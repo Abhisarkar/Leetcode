@@ -1,0 +1,23 @@
+1 : right side view -> rightmost element in each level.
+2 : with recursively the size of vector gives the idea about the level number.
+
+void view(vector <int> &vec, TreeNode *root) {
+        queue <TreeNode *> q;
+        q.push(root);
+        while(!q.empty()) {
+            int len = q.size();
+            vec.push_back(q.back()->val);//rightmost element in each level
+            for(int i=0;i<len;++i) {
+                TreeNode *t=q.front();q.pop();
+                if(t->left) q.push(t->left);
+                if(t->right) q.push(t->right);
+            }
+        }
+    }
+    
+    vector<int> rightSideView(TreeNode* root) {
+        vector <int> vec;
+        if(!root) return vec;
+        view(vec,root);
+        return vec;
+    }

@@ -1,0 +1,28 @@
+1: Recursive solution.
+
+ 
+void flatten(TreeNode* root) {
+        if(!root) return;
+        flatten(root->left); // flatten the left subtree first.
+        flatten(root->right); // then right subtree.
+        TreeNode *tmp = root->right;
+        root->right = root->left, root->left = nullptr;
+        while(root->right) root = root->right;
+        root->right = tmp;
+    }
+
+2: Iterative solution.
+
+void flatten(TreeNode* root) {
+        if(!root) return;
+        TreeNode *now = root;
+        while(now) {
+            if(now->left) {//handle the left subtree first.
+                TreeNode *pre = now->left; // pre is used to get the node after which root->right node is appended to flatten the tree.
+                while(pre->right) pre = pre->right; 
+                pre->right = now->right, now->right = now->left, now->left = nullptr; // root 's right is appended to left(rightmost left), 
+								// left became right subtree.
+            }
+            now = now->right;
+        }
+     }

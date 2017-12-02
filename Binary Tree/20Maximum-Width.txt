@@ -1,0 +1,33 @@
+//Width of a binary tree including the null nodes.
+concept -> Just node numbering is required.e.g child node of 0(root) is 2*0=0 and 2*0+1=1,So width is 1-0+1 = 2.
+Insert the node numbers to the queue.(in that way if left child is null but right child is present then node number of right child
+will be inserted)
+
+int widthOfBinaryTree(TreeNode* root) {
+        int begin,end,ans=0;
+        if(!root) return 0;
+        queue <pair <TreeNode *,int>> q;
+        q.push(make_pair(root,0));
+        while(!q.empty()) {
+            int len = q.size();
+            for(int i=0;i<len;++i) {
+                
+                pair <TreeNode *,int> t = q.front();
+                q.pop();
+                if(i==0) {
+                    begin = t.second;
+                }
+                if(i==len-1) {
+                    end = t.second;
+                }
+	//first (begin) and last (end) node number of that level is important.
+                if( (t.first)->left)
+                    q.push(make_pair(t.first->left,t.second*2));//inserting the node number
+                if( (t.first)->right)
+                    q.push(make_pair(t.first->right,t.second*2+1));//same
+         	}
+            ans = max(ans,end-begin+1);
+        }
+        return ans;
+        
+    }

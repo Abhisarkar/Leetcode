@@ -1,0 +1,24 @@
+//671. Second Minimum Node In a Binary Tree
+
+ int findSecondMinimumValue(TreeNode* root) {
+        map <int,int> seen;
+        queue <TreeNode *> q;
+        vector <int> ans;
+        q.push(root);
+        while(!q.empty()) {
+            int s = q.size();
+            for(int i=0;i<s;++i) {
+                TreeNode *p = q.front();q.pop();
+                if(p->left) q.push(p->left);
+                if(p->right) q.push(p->right);
+                if(!seen[p->val])
+                    ans.push_back(p->val),seen[p->val]=1;
+            }
+        }
+        sort(ans.begin(),ans.end());
+        if(ans.size()>1)
+            return ans[1];
+        else
+            return -1;
+            
+    }

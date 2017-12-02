@@ -1,0 +1,27 @@
+117. Populating Next Right Pointers in Each Node II
+
+void connect(TreeLinkNode *root) {
+        queue<TreeLinkNode *> q;
+        if(!root) return;
+        q.push(root);
+        while(q.size()) {
+            int t = q.size(); TreeLinkNode *last=nullptr;
+            for(int i=0; i<t; ++i) {
+                TreeLinkNode *cur = q.front(); q.pop();
+                if(cur->left && cur->right) {
+                    if(last) last->next = cur->left;
+                    cur->left->next = cur->right;
+                    last = cur->right; q.push(cur->left), q.push(cur->right);
+                }
+                else if(!cur->right && cur->left) {
+                    if(last) last->next = cur->left;
+                    last = cur->left; q.push(cur->left);
+                }
+                  else if(cur->right && !cur->left) {
+                    if(last) last->next = cur->right;
+                    last = cur->right; q.push(cur->right);
+                }                
+            }
+            if(last) last->next = nullptr;
+        }
+    }

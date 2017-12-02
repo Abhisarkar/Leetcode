@@ -1,0 +1,19 @@
+Iterative : stack is used.
+
+vector<int> inorderTraversal(TreeNode* root) {
+        stack <TreeNode *> s;
+        vector <int> vec;
+        TreeNode *cur=root;
+        while( cur || !s.empty() ) {
+            if(cur) {
+                s.push(cur);
+                cur=cur->left;
+            }   
+            else {
+                cur=s.top(),s.pop();
+                vec.push_back(cur->val);
+                cur=cur->right;
+            }
+        }
+        return vec;
+    }

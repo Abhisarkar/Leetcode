@@ -1,0 +1,19 @@
+129. Sum Root to Leaf Numbers
+
+void findsum( TreeNode *root, int &sum, int s ) {
+        
+        if(!root) return;
+        s = s*10 + root->val;
+        if(!root->left && !root->right) {
+            sum += s; return;
+        }
+        findsum(root->left,sum,s);
+        findsum(root->right,sum,s);
+    }
+    
+    int sumNumbers(TreeNode* root) {
+        if(!root) return 0;
+        int sum=0,s=0;
+        findsum(root,sum,s);
+        return sum;
+    }

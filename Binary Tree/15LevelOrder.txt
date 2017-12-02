@@ -1,0 +1,23 @@
+Level order traversal using bfs.
+
+vector<vector<int>> levelOrder(TreeNode* root) {
+        
+        queue <TreeNode *> q;
+        q.push(root);
+        vector<int> vec;
+        vector<vector<int>> vvec;
+        if(!root) return vvec;
+        
+        while(!q.empty()) {
+            vec.clear();
+            int len = q.size();
+            for(int i=0;i<len;i++)  {
+                TreeNode *t=q.front();q.pop();
+                vec.push_back(t->val);
+                if(t->left) q.push(t->left);
+                if(t->right) q.push(t->right);
+            }
+            vvec.push_back(vec);
+        }
+        return vvec;
+    }
