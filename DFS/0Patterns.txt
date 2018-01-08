@@ -1,0 +1,6 @@
+1. Whenever it's a distance finding problem, most of the times it's a BFS problem
+
+2. Find a sequence : make a parent array and store parent of nodes and finally reverse the sequence.
+
+3. Finding a cycle or detecting a edge making cycle in graph : Union-find.
+ 

@@ -1,0 +1,45 @@
+//Concept: finding cycle in a directed graph.
+Main difference in finding cycle in undirected and directed graph is that if we visit a already visited node in directed graph,
+in some cases it does not necessary that graph has a cycle.
+E.g: 0->1 1->2 0->2.
+here if we dfs from 0, we will mark 2 as visited, and then it will visit 2 again and say it has cycle, but in reality it doe not 
+have any cycle.
+
+Solution: Have an boolean array to mark the elements which are on the path.
+E.g : 0->1 1->2 0->2
+first mark 0, 1, 2 as true in onpath[], as they are on a path from 0 to 2.
+From 2 there is no path, so we unmark 2, then 1.
+Then from 0 we go to next neighbour, i.e 2(and it is marked false while returning form it on onpath[]), so cycle is not formed.
+
+*******************************************************************************************************
+
+bool visited[10005], onpath[10005], loop=false;
+    vector<int> edges[10005];
+    
+    void dfs(int node) {
+        if(visited[node]) return;
+        visited[node] = true, onpath[node] = true;
+        for(int n:edges[node]) {
+            if(loop) return;
+            else if(onpath[n]) {loop=true; return;}
+            else dfs(n);
+        }
+        onpath[node] = false;
+    }
+    
+    bool canFinish(int numCourses, vector<pair<int, int>>& pre) {
+        if(!pre.size()) return true;
+        for(pair<int, int> p : pre)
+            edges[p.first].push_back(p.second);
+        memset(visited, false, sizeof(visited));
+        memset(onpath, false, sizeof(onpath));
+        for(int i=0; i<numCourses; ++i) {
+            if(!visited[i]) {
+                dfs(i);
+                if(loop) return false;
+            }
+        }
+        return true;
+    }
+
+***********************************************************************************************************

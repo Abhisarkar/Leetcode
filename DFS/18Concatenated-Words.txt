@@ -1,0 +1,27 @@
+1. Instead of adding strings at each level, I can take each string, split it and check substring existence(through recursions).
+(index modifications are required).
+
+*********************************************************************
+
+    bool dfs(string &word, map<string, int> &m, int index, int cnt) {
+        if(index >= word.size() && cnt > 1) return true;
+        for(int i=1; i<=word.size()-index; ++i) {
+            string str = word.substr(index, i);
+            if(m.find(str) != m.end() && dfs(word, m, index + i, cnt+1))
+                return true;
+        }
+        return false;
+    }
+
+    vector<string> findAllConcatenatedWordsInADict(vector<string>& words) {       
+        vector<string> ans;
+        if(words.empty()) return ans;
+        map<string, int> m;
+        for(string s : words) m[s]=1;
+        for(string word : words)
+             if(dfs(word, m, 0, 0)) ans.push_back(word);
+        return ans;       
+    }
+
+*********************************************************************
+

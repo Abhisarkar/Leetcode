@@ -1,0 +1,32 @@
+Concept : Detecting an edge which is forming a cycle
+
+1. It can be solved by union find algorithm.
+2. In union find it does not connect just the nodes, but the root node of that connected component to another connected component.
+
+*************************************************************************
+
+ int root[1006];    
+    
+    int find(int a) {
+        while( a != root[a])  a = root[a];
+        return a;        
+    }
+    
+    void union1(int a, int b) {
+        int r1 = find(a); int r2 = find(b);
+        root[r2] = r1;//the order does not matter. root[r1] = r2 also works.
+    }
+    
+    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        vector<int> ans;
+        if(edges.empty()) return ans;     
+        for(int i=0; i<1006; ++i) root[i] = i;
+        for(vector<int> edge : edges) {
+            if(find(edge[0]) == find(edge[1]))
+                return edge;            
+            else 
+                union1(edge[0], edge[1]);
+        }
+    }  
+
+************************************************************************

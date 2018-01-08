@@ -1,0 +1,39 @@
+Concept : 
+1. Graph can have ONLY N nodes and N edges.
+2. This problem is solved by understanding the structure of the graph specified in the description.
+
+Structure : N nodes N edges. No node can have more than one parent except root.
+Now one extra edge is added. Find this edge by removing which the graph regains it's proper shape.
+
+int find(int u, vector<int> &p){
+        return u == p[u] ? u : find(p[u], p);
+    }
+    vector<int> findRedundantDirectedConnection(vector<vector<int>>& edges) {
+            
+        vector<int> parent(edges.size()+1, 0), canA, canB;
+        for(vector<int> &edge : edges) {
+            if(parent[edge[1]] == 0)
+                parent[edge[1]] = edge[0];
+            else {//for one node to have more than one parent , so two edges
+                canA = {parent[edge[1]], edge[1]};//first edge, it was set earlier
+                canB = edge;//second i.e current one
+                edge[1] = 0;//current one is removed by setting the second node address to 0, so the graph is assumed to be proper
+                            //now if cycle is detected, then it'll be assumed that the first edge is causing trouble.
+            }
+        }
+        for(int i=0; i<edges.size()+1; ++i) 
+            parent[i] = i;
+        for(vector<int> &edge : edges) {
+            if(edge[1] == 0) //this edge was removed
+                continue;
+            int u = edge[0], v = edge[1], pu = find(u, parent);
+            if(pu == v) {
+                if(canA.empty()) //no node has >1 parents
+                    return edge;//it's a normal cycle
+                return canA;//some node has > 1 parents and the edge thar was not removed from graph causing the cycle.
+            }
+            parent[v] = pu;
+        }
+        return canB;//the removed edge caused the cycle.
+        
+    }

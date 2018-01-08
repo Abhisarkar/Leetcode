@@ -1,0 +1,36 @@
+Concepts : 
+1. Finding the decreasing path
+2. checking whether from one point path leads to both the boudaries.
+
+ONE Important thing is previous index , when sent gave different result, then when the value at that previous index was sent.
+
+int row, col;
+    bool pac, atl;
+    
+    void dfs(vector<vector<int>>& matrix, int pre, int curx, int cury) {
+        if(pac && atl) return;
+        if(curx<0 || cury<0) {pac=true; return;}
+        if(curx>=row || cury>=col) {atl=true; return;}
+        if(matrix[curx][cury] == -1 || matrix[curx][cury] > pre) return;//checks if this node is on path, and if it's greater than 
+							//the previous node.
+        int tmp = matrix[curx][cury];
+        matrix[curx][cury] = -1;//marking the elements on path.
+        int dx[] = {1, 0, -1, 0}, dy[] = {0, 1, 0, -1};
+        for(int k=0; k<4; ++k) 
+            dfs(matrix, tmp, curx + dx[k], cury + dy[k]);
+        matrix[curx][cury] = tmp;//restoring the elements so that next path can access it.
+    }
+    
+    vector<pair<int, int>> pacificAtlantic(vector<vector<int>>& matrix) {
+        vector<pair<int, int>> ans;
+        if(!matrix.size()) return ans;
+        row = matrix.size(), col = matrix[0].size();
+        for(int i=0; i<row; ++i) {
+            for(int j=0; j<col; ++j) {
+                pac=false, atl=false;
+                dfs(matrix, matrix[i][j], i, j);
+                if(pac && atl) ans.push_back({i,j});
+            }
+        }
+        return ans;
+    }

@@ -1,0 +1,16 @@
+void dfs(vector<Employee*> emp, Employee* t, int id, int &imp) {
+        imp += t->importance;
+        for(int i:t->subordinates) {
+             for(Employee * td : emp) 
+                if(td->id == i) dfs(emp, td, i, imp);
+        }
+            
+    }
+    
+    int getImportance(vector<Employee*> emp, int id) {
+       if(!emp.size()) return 0;
+        int imp=0;
+        for(Employee * t : emp) 
+            if(t->id == id) dfs(emp, t, id, imp);
+        return imp;
+    }

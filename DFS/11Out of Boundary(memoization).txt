@@ -1,0 +1,40 @@
+1. Recursive version (visiting same cell with same number of turns)
+
+void dfs(int x, int y, int m, int n, int N, int &cnt) {       
+        if(N <= 0) {
+             if(x < 0 || x >= m || y < 0 || y >= n) ++cnt;
+            return;
+        }
+        if(x < 0 || x >= m || y < 0 || y >= n) {++cnt; return;}
+        int dx[] = {1, 0, -1, 0}, dy[] = {0, 1, 0, -1};
+        for(int k=0; k<4; ++k) 
+            dfs(x + dx[k], y + dy[k], m, n, N-1, cnt);
+    }
+    
+    int findPaths(int m, int n, int N, int i, int j) {
+        if(!m || !n) return 0;
+        int cnt = 0;
+        dfs(i, j, m, n, N, cnt);
+        cnt %= 1000000007;
+        return cnt;        
+    }
+
+2. Memoized version (memoizing the cell which are visited twice with same number of turns).
+
+   #define M 1000000007
+    int memo[51][51][51];
+    int dfs(int x, int y, int m, int n, int N) {       
+        if(x < 0 || x >= m || y < 0 || y >= n) return 1;
+        if(N <= 0) return 0;
+        if(memo[x][y][N] >= 0) return memo[x][y][N];//It's helpful for calculation of neighbouring cells when runs through same cell.
+        int dx[] = {1, 0, -1, 0}, dy[] = {0, 1, 0, -1};
+    memo[x][y][N] =( ( dfs(x+1, y, m, n, N-1) + dfs(x, y+1, m, n, N-1) ) % M + ( dfs(x-1, y, m, n, N-1) + dfs(x, y-1, m, n, N-1) ) % M ) % M;
+        return memo[x][y][N];
+    }
+    
+    int findPaths(int m, int n, int N, int i, int j) {
+        if(!m || !n) return 0;
+        int cnt = 0;
+        memset(memo, -1, sizeof(memo));
+        return dfs(i, j, m, n, N);       
+    }

@@ -1,0 +1,28 @@
+1. Finding connected components.
+
+vector<int> edge[100005];
+    bool visited[100005];
+    
+    void dfs(int u) { 
+        if(visited[u]) return;
+        visited[u] = true;
+        for(int n : edge[u] )
+            dfs(n);
+    }
+    
+    int findCircleNum(vector<vector<int>>& M) {
+        if(M.empty()) return 0;
+        for(int i=0; i<M.size(); ++i) {
+            for(int j=0; j<M[0].size(); ++j) {
+                if( i != j && M[i][j])
+                    edge[i].push_back(j), edge[j].push_back(i);
+            }
+         }
+        memset(visited, false, sizeof(visited));
+        int c=0;
+        for(int i=0; i<M.size(); ++i) 
+            if(!visited[i]) 
+                dfs(i), ++c;
+        return c;
+            
+    }

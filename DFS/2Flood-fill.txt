@@ -1,0 +1,19 @@
+//Standard DFS on grid. 
+
+int row, col;
+   
+    void dfs(vector<vector<int>>& image, int x, int y, int needColor, int color) {
+        if(x<0 || x>=row || y<0 || y>=col || image[x][y] != needColor) return;
+        image[x][y] = color;
+        int dx[] = {1,0,-1,0}, dy[] = {0,1,0,-1};
+        for(int k=0 ; k<4; ++k) 
+            dfs(image, x+dx[k], y+dy[k], needColor, color);
+    }
+    
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) { 
+        if (image[sr][sc] == newColor) return image;
+        row = image.size(), col = image[0].size();      
+        int needColor = image[sr][sc];
+        dfs(image, sr, sc, needColor, newColor);
+        return image;
+    }

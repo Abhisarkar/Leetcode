@@ -1,0 +1,41 @@
+1. Problem : given emails of some persons. some persons details are repeated(the name). Merge all the emails of one person into one vector.
+2. Union Find is used where the first email in a vector is the representative of the subset and next emails are elements
+    of the subset. 
+
+
+
+***********************************************************************
+
+string find(string s, map<string, string> &parent) {
+        return s == parent[s] ? s : find(parent[s], parent);
+    }
+    
+    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
+        map<string, string> parent;
+        map<string, string> owner;
+        map<string, set<string>> unions;
+        for(vector<string> vec : accounts) {
+            for(int i=1; i<vec.size(); ++i) 
+                parent[vec[i]] = vec[i], owner[vec[i]] = vec[0];
+        }
+        for(int i=0; i<accounts.size(); ++i) {
+            string p = find(accounts[i][1], parent);
+            for(int j=2; j<accounts[i].size(); ++j) {
+                parent[find(accounts[i][j], parent)] = p;
+            }
+        }
+        for(int i=0; i<accounts.size(); ++i) {
+            for(int j=1; j<accounts[i].size(); ++j) {
+                unions[find(accounts[i][j], parent)].insert(accounts[i][j]);
+            }
+        }
+        vector<vector<string>> ans;
+        for(pair<string, set<string>> p : unions) {
+            vector<string> emails(p.second.begin(), p.second.end());
+            emails.insert(emails.begin(), owner[p.first]);
+            ans.push_back(emails);
+        }
+        return ans;
+    }
+
+*************************************************************************

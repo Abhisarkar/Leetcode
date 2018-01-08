@@ -1,0 +1,5 @@
+1. Sometimes visiting a node before it can be used as a optimal solution through another path can alter the answer,
+so the nodes can be marked as onpath[x][y], and while returning from the nodes mark them as false so that it can be
+traversed again through different path.
+
+2. Declaring variables globally sometimes give runtime errors.

@@ -1,0 +1,28 @@
+Concept: 
+1. It basically implements a string append function. number of times is given at front.
+2. It recursively returns the string after computation, and gets added to the resultant string.
+3. Good for string implementation problems.
+
+string decode(string s, int &i) {
+        string res="";
+        while( i<s.length() && s[i]!=']' ) {
+            if(!isdigit(s[i])) //if the string starts with alphabets, just append.
+                res += s[i++];
+            else {
+                int n=0;
+                while(i<s.length() && isdigit(s[i]))
+                    n = n*10 + s[i++]-'0';
+                i++;
+                string str = decode(s, i);//returns the resultant string inside the [].
+                i++;
+                while(n-->0)
+                    res += str;
+            }
+        }
+        return res;
+    }
+    
+    string decodeString(string s) {
+        int i=0;
+        return decode(s, i);        
+    }

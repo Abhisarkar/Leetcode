@@ -1,0 +1,25 @@
+1. The pattern i>begin && nums[i] == nums[i-1] works to avoid same element going into recursion.
+2. It is applicabe only to sorted array.
+3. Here it can be a unsorted array, so maps are used at each level so that same element does not go into recursion.
+
+
+void dfs( vector<vector<int>> &ans, vector<int> res, vector<int>& nums, int begin) {
+        if(res.size() >= 2) ans.push_back(res);
+        unordered_map <int, int> m;
+        for(int i=begin; i<nums.size(); ++i) {     
+            if((!res.size() || nums[i] >= res.back()) && !m[nums[i]]) {
+               res.push_back(nums[i]);
+                  m[nums[i]]=1;
+                dfs(ans, res, nums, i+1);
+                res.pop_back();
+            }
+        }
+    }
+    
+    vector<vector<int>> findSubsequences(vector<int>& nums) {
+        vector<vector<int>> ans;
+        if(nums.empty()) return ans;
+        vector<int> res;
+        dfs(ans, res, nums, 0);
+        return ans;
+    }

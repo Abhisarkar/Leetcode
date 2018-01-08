@@ -1,0 +1,29 @@
+
+1. Straightforward DP + DFS. 
+
+int row, col;   
+    int ans = INT_MIN;
+    int dp[1005][1005];
+    
+    int dfs(vector<vector<int>>& matrix, int curx, int cury, int val) {
+        if(curx < 0 || curx >= row || cury < 0 || cury >= col) return 0;     
+        if(matrix[curx][cury] > val) {
+            if(dp[curx][cury]) return dp[curx][cury];//if already calculated return the value.
+            int dx[] = {1, 0, -1, 0}, dy[] = {0, 1, 0, -1};
+            for(int k=0; k<4; ++k) 
+                dp[curx][cury] = max(dp[curx][cury], dfs(matrix, curx + dx[k], cury + dy[k], matrix[curx][cury]) + 1);
+                return dp[curx][cury];
+        }
+         return 0;   
+    }
+    
+    int longestIncreasingPath(vector<vector<int>>& matrix) {
+        if(matrix.empty()) return 0;
+        row = matrix.size(), col = matrix[0].size();
+        memset(dp, 0, sizeof(dp));
+        for(int i=0; i<row; ++i) 
+            for(int j=0; j<col; ++j) 
+                ans = max(ans, dfs(matrix, i, j, INT_MIN));   //sending value over index makes it cleaner.         
+        
+        return ans;
+    }

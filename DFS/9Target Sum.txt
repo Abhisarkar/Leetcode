@@ -1,0 +1,17 @@
+1. Finds the number of combinations of elements adding up to a given sum. (+, -) operations are used.
+
+  void dfs(vector<int>& nums, int target, int val, int &res, int pos) {
+        if(pos == nums.size()) {//all the elements should be taken into account.
+            if(val == target) ++res;
+            return;
+    }
+        dfs(nums, target, val+nums[pos], res, pos+1);//dfs into both possibilities.
+        dfs(nums, target, val-nums[pos], res, pos+1);
+    }
+    
+    int findTargetSumWays(vector<int>& nums, int S) {
+        if(nums.empty()) return 0;
+        int res=0;
+        dfs(nums, S, 0, res, 0);
+        return res;
+    }

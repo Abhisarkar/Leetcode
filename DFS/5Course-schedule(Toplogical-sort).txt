@@ -1,0 +1,29 @@
+1. This problem is about returning the order from root to leaves.
+2. The main concept is finding root, as there can be many of them.
+2. That is why concept of incoming degree of nodes is used, where the indegree[root] will always be zero, and we can 
+    identify the roots.
+
+****************************************************************
+
+vector<int> findOrder(int numCourses, vector<pair<int, int>>& pre) {
+        vector<int> ans;
+        vector<int> indegree(numCourses, 0);
+        vector<int> edge[numCourses];
+        queue<int> q;
+        for(pair<int, int> p : pre) 
+            edge[p.second].push_back(p.first), indegree[p.first]++;
+        for(int i=0; i<numCourses; ++i) if(!indegree[i]) q.push(i);//pushing the roots at the beginning.
+        while(q.size()) {
+            int u = q.front(); q.pop();
+            ans.push_back(u);
+            for(int v : edge[u]) {
+                indegree[v]--;
+                if(!indegree[v]) 
+                    q.push(v);
+            }
+        }
+        if(ans.size() == numCourses) return ans;
+        else return vector<int> {};
+    }
+
+****************************************************************
