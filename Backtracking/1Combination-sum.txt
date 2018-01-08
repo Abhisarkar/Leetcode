@@ -1,0 +1,20 @@
+
+
+void backtrack(vector<vector<int>> &ans, vector<int> res, vector<int> &nums, int target, int begin) {
+        if(target < 0) return;
+        else if(target == 0) {ans.push_back(res); return;}
+        for(int i=begin;i<nums.size();++i) {
+            res.push_back(nums[i]);
+            backtrack(ans, res, nums, target-nums[i], i);//index i is sent so that the loop does not start again from 0, resulting in
+					       //already created combinations.
+            res.pop_back();//popped so that at one level only 1 element is entered into the vector.
+        }
+    }
+    
+    vector<vector<int>> combinationSum(vector<int>& nums, int target) {
+        vector<vector<int>> ans;
+        vector<int> res;
+        sort(nums.begin(),nums.end());
+        backtrack(ans, res, nums, target, 0);
+        return ans;
+    }

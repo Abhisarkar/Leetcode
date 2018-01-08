@@ -1,0 +1,44 @@
+Problem: Go from one word to another word, changing one letter at a time.
+
+Concept : BFS .
+1. Here neighbors are words which has ony one letter different from the beginWord.
+2. Insert words into queue which has ony one letter different from the current Word.
+3. Check through the neighbours if destination is reached or not.
+
+
+
+
+*******************************************************************************************************
+ int ladderLength(string b, string e, vector<string>& List) {
+        queue<string> q;
+        unordered_set <string> s(List.begin(), List.end());//just for increasing the speed. only vectors can also be used to solve the problem.
+        addnextwords(b, s, q);// insert the neighbors of the string from which traversing shouls start.
+        int dist = 2;
+        while(q.size()) {
+            int num = q.size();
+            for(int i=0; i<num; i++) {//traversing over the neighbors(all at distance 1).
+                string word = q.front(); q.pop();//get a neighbor//remove it from the neighbor list as it is visited
+                if(word == e) return dist;//if neighbor is the destination word, return the distance.
+                addnextwords(word, s, q);//word is at 1 distance from beginWord
+            }			 //it's just adding neighbors of neighbors of beginWord.
+            ++dist;//when moved to next word, distance in increased.
+        }
+        return 0;      
+    }
+    
+    void addnextwords(string word, unordered_set <string> &s, queue <string> &q) {
+        s.erase(word); //to avoid visiting a word for more than once, we erase it from dict once it is visited.
+        for(int i=0; i<word.length(); ++i) {
+            char c = word[i];
+            for(int k=0; k<26; ++k) {
+                word[i] = 'a' + k;//changing one letter at a time. //changing each letter from 'a' -> 'z'
+                if( s.find(word) != s.end() ) {
+                    q.push(word); // pushing the word(has one changed letter) into the neighbor list of actual word.(obtained from list of words s(the set)).   
+	       s.erase(word);//to avoid visiting a word for more than once, we erase it from dict once it is visited.
+                }
+            }
+            word[i] = c;//restoring the letter to change the next letter.
+        }
+    }
+
+********************************************************************************************************************

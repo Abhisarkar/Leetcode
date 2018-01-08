@@ -1,0 +1,17 @@
+1.To build a well formed parenthesis, we need, 
+	Condition: open braces count to be <= total length/2, and close braces count <= open braces.
+
+
+void backtrack(vector <string> &ans, string str, int n, int lc, int rc) {
+        if(lc+rc == 2*n) {ans.push_back(str);return;} //n = no. of well formed parenthesis.
+        if(lc<n) backtrack(ans, str+'(', n, lc+1, rc);
+        if(rc<lc) backtrack(ans, str+')', n, lc, rc+1);
+    }
+    
+    vector<string> generateParenthesis(int n) {
+        vector <string> ans, vec;
+        if(!n) return ans;
+        string str="";
+        backtrack(ans, str, n, 0, 0);
+        return ans;
+    }

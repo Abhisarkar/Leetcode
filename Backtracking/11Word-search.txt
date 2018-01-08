@@ -1,0 +1,35 @@
+//Main Concept: Traverse already visited points without forming loops.
+Solution : unvisiting a node after it has been visited.
+ E.g: we visit node 1(mark visited) and it's neighbouring nodes.Now when we are visiting node 1's nearer nodes, node 1 is marked
+ visited, so it does not get visited at that point.
+ However when all the path combinations are done from node 1, then if word is found already then return true, else
+ node 1 is marked unvisited, so that it can be used in future as a mid point for some else route.
+
+void dfs(vector<vector<char>>& board, int curx, int cury, int len, string word) {
+        if(len == word.size()) {matched = true; return;} 
+        if(matched || curx < 0 || curx >= row || cury < 0 || cury >= col || visited[curx][cury] ) return;
+        if(board[curx][cury] != word[len]) return;   
+        visited[curx][cury] = true;
+        int dx[] = {1,0,-1,0};
+        int dy[] = {0,1,0,-1};        
+        for(int k=0; k<4; ++k)         
+            dfs(board, curx+dx[k], cury+dy[k], len+1, word);        
+     
+        visited[curx][cury] = false;//essential for visiting already traversed point.
+    }
+
+    bool exist(vector<vector<char>>& board, string word) {
+        if(!board.size() || !word.size()) return false;
+        bool f = false;
+        row = board.size(), col = board[0].size();
+        for(int i=0; i<row; ++i) {
+            for(int j=0;j<col; ++j) {
+                if(board[i][j] == word[0]) {
+                     memset(visited, false, sizeof(visited));
+                     dfs(board, i, j, 0, word);
+                     if(matched) return true;
+                }
+            }
+        }
+        return false;
+    }

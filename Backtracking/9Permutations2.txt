@@ -1,0 +1,35 @@
+1. Set includes duplicates.
+2. We can include duplicates into the result, BUT not from the SAME LEVEL.
+
+Two concepts here : 
+1. Preventing same indexed element from getting included into the result from next levels of recursion. 
+(Solved by including the INDEX, not value, since value can be same in the deeper levels of recursion(array contains duplicate elements)).
+
+2. Since the array conrtains duplicates, we have to prevent same valued element getting included again. 
+(Solved by sorting the array and blocking the same valued elements which have been included once. 
+We use map at each level, to mark the elements which are used from THIS level, 
+(helpful while using a element which has value same as the previous element but previous element is used in earlier level.
+so from this level previous element is not being considered, and the element is included into the resultant set)).
+
+    void backtrack(vector<vector<int>> &ans, vector<int> res, vector<int> ind, vector<int>& nums, int cnt) {
+        if(cnt == nums.size()) {ans.push_back(res); return;}
+        map <int, int> m;
+        for(int i=0; i<nums.size(); ++i) {  
+           
+            if(find(ind.begin(), ind.end(), i) == ind.end() ) {         
+                if(i>0 && m[nums[i]] && nums[i] == nums[i-1]) continue;
+                res.push_back(nums[i]);  ind.push_back(i);
+                backtrack(ans, res, ind, nums, cnt+1);
+                res.pop_back(); ind.pop_back(); m[nums[i]] = 1;   
+            }
+        }
+    }
+    
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> res, ind;
+        if(!nums.size()) return ans;
+        sort(nums.begin(), nums.end());
+        backtrack(ans, res, ind, nums, 0);
+        return ans;
+    }

@@ -1,0 +1,21 @@
+1.Since the numbers are distinct, we just have to prevent same element getting included into the resultant set. 
+(solved by find function).
+ 
+void backtrack(vector<vector<int>> &ans, vector<int> res, vector<int>& nums, int cnt) {
+        if(cnt == nums.size()) {ans.push_back(res); return;}
+        for(int n : nums) {
+            if(find(res.begin(), res.end(), n) == res.end()) {
+                res.push_back(n);
+                backtrack(ans, res, nums, cnt+1);
+                res.pop_back();
+            }
+        }
+    }
+    
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> ans;
+        vector<int> res;
+        if(!nums.size()) return ans;
+        backtrack(ans, res, nums, 0);
+        return ans;
+    }

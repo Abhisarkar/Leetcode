@@ -1,0 +1,24 @@
+//condition : duplicate elements can not be used.
+solution: sort the vector, and don't send the same elements again, and keep track of the index.
+
+Note: since the array is sorted, we cannot get a previously occurring element at later stages of recursion. 
+
+void backtrack(vector<vector<int>> &ans, vector<int> res, vector<int> &nums, int target, int begin) {
+        if(target < 0) return;
+        else if(target == 0) {ans.push_back(res); return;}
+            for(int i=begin;i<nums.size();++i) {
+            
+                if( i>begin && nums[i] == nums[i-1]) continue;
+                res.push_back(nums[i]); 
+                backtrack(ans, res, nums, target-nums[i], i+1);
+                res.pop_back();
+             }
+    }
+    
+    vector<vector<int>> combinationSum2(vector<int>& nums, int target) {
+        vector<vector<int>> ans;
+        vector<int> res;
+        sort(nums.begin(),nums.end());      
+        backtrack(ans, res, nums, target, 0);
+        return ans;
+    }

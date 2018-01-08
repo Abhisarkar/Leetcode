@@ -1,0 +1,27 @@
+
+
+ void backtrack(vector <string> &ans, vector <string> vec, int len, string str, int cnt, int begin) {
+        if( cnt == len ) {ans.push_back(str);return;}// when all the digits are considered, cnt will be increased to length of the digit.
+        for(int i=begin; i<len; ++i) {
+            for(char c : vec[i]) {
+                backtrack(ans, vec, len, str+c, cnt+1, i+1);//str+c means adding a character from that level. i+1 means next digit string is worked upon.
+            }
+        }
+     }
+    
+    vector<string> letterCombinations(string digits) {
+        map <char,string> m;       
+        m['2'] = "abc",  m['3'] = "def",  m['4'] = "ghi",  m['5'] = "jkl",  m['6'] = "mno", //store numbers in a map.
+        m['7'] = "pqrs",  m['8'] = "tuv",  m['9'] = "wxyz";
+        
+        vector <string> vec, ans;
+        for(char c : digits) if(c == '1' || c == '0') return ans; 
+        if(!digits.length()) return ans;
+        string str="";
+        
+        for(char c : digits) {
+            vec.push_back(m[c]);// push the strings,
+        }
+        backtrack(ans, vec, digits.length(), str, 0, 0);
+        return ans;
+    }

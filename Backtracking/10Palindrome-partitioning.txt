@@ -1,0 +1,23 @@
+1. //idx is the index previous to which the last palindrome ended.
+
+void backtrack( vector<vector<string>> &ans, vector<string> res, string s, int idx) {
+        if(idx == s.length()) { ans.push_back(res); return; } //starting index is n, so the string is fully traversed, and partitions are pushed to answer..
+        for(int i=idx; i<s.length(); ++i) {// s.len will be constant, idx is starting index, which is where last examination ended.
+            int l=idx, r=i;//checking substring of all lengths.
+            while(l<r && s[l]==s[r]) ++l, --r;//checking if substring is palindrome.  // however in the next deeper levels we'll check substrings from b,c.
+            if(l>=r) { // if palindrome.
+                res.push_back(s.substr(idx, i-idx+1)); // for aabc, we'll only examine from 'a' cz a is in idx 0(l).
+                backtrack(ans, res, s, i+1);//palindrome till ith length is found, so sending i+1 index to find next set of palindromes from i+1 to string.length().
+                res.pop_back();
+            }
+        }
+    }
+    
+    vector<vector<string>> partition(string s) {
+        vector<vector<string>> ans;
+        if(!s.size()) return ans;
+        vector<string> res;
+        backtrack(ans, res, s, 0);
+        return ans;
+        
+    }
