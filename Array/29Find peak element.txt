@@ -1,0 +1,18 @@
+If num[i-1] < num[i] > num[i+1], then num[i] is peak
+If num[i-1] < num[i] < num[i+1], then num[i+1...n-1] must contains a peak
+If num[i-1] > num[i] > num[i+1], then num[0...i-1] must contains a peak
+If num[i-1] > num[i] < num[i+1], then both sides have peak
+(n is num.length)
+
+int findPeakElement(vector<int>& nums) {
+        int l=0, r = nums.size()-1;
+        while(l < r) {
+            int mid1 = l + (r - l) / 2;
+            int mid2 = mid1+1;
+            if(nums[mid2] > nums[mid1]) 
+                l = mid2;
+            else 
+                r = mid1;
+        }
+        return l;
+    }

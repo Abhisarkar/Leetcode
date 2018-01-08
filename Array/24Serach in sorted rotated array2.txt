@@ -1,0 +1,25 @@
+Concept : 
+1. Duplicates are present, so array cannot be assumed as sorted for nums[lo] <= nums[mid] for 1 2 3 1 1 1 1
+2. since only one break is allowed from sorted order, so something of this sort is a case of nums[lo] == nums[mid] == nums[end] 
+since the array is sorted when moved from last to again first ( ghuira asa ) 
+3. Here all the elements are measured and time complexity is O(N). else O(logn)
+
+
+ bool search(vector<int>& nums, int target) {
+        if(nums.empty()) return false;
+        int lo = 0, hi = nums.size()-1;
+        while(lo < hi) {
+            int mid = (lo + hi) / 2;
+            if(target == nums[mid]) return true;
+            if(nums[lo] == nums[mid] && nums[mid] == nums[hi]) lo++, hi--;
+            else if(nums[lo] <= nums[mid]) {//first part sorted
+                if( target >= nums[lo] && target < nums[mid]) hi = mid - 1;
+                else lo = mid + 1;
+            }
+            else {
+                if( target > nums[mid] && target <= nums[hi]) lo = mid + 1;
+                else hi = mid - 1;
+            }
+        }
+        return nums[lo] == target;
+    }

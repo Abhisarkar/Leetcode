@@ -1,0 +1,17 @@
+Concept: find the index of rightmost maximum number and leftmost number < maximum number. Thats it.
+
+int maximumSwap(int val) {
+        string str = to_string(val);
+        int n = str.size();
+        int mxidx = n-1, leftidx = -1, rightidx = -1;
+        for(int i=n-1; i>=0; --i) {
+            if(str[i] > str[mxidx]) {
+                mxidx = i; continue;
+            }
+            if(str[i] < str[mxidx])
+                leftidx = i, rightidx = mxidx;
+        }
+        if(leftidx == -1) return val;
+        swap(str[leftidx], str[rightidx]);
+        return stoi(str);
+    }

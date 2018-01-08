@@ -1,0 +1,13 @@
+1. Keep track of maximum jump
+2. If at any point 0 jump encountered, then moving is not possible further.
+
+
+ bool canJump(vector<int>& nums) {
+        if(nums.empty() || nums.size() == 1) return true;
+        int ans = nums[0];
+        for(int i=1; i<nums.size()-1; ++i) {
+            if(!ans) continue;
+            --ans, ans = max(ans, nums[i]);
+        }
+        return ans > 0;
+    }

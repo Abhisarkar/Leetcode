@@ -1,0 +1,19 @@
+Pattern: count of particular sum required. Maps required.
+
+1. we simply check if a value has been seen before. 
+2. what value? the value needed to subtract from the current prefix sum  in order to get the required sum.
+3. basicallly prefix[ 0 - i ] is subtracted from prefix[ 0 - j ]. j > i.
+4. maps are helpful to check if any valid prefix[ 0 - i ] exist.
+    int subarraySum(vector<int>& nums, int k) {
+        if(nums.empty()) return 0;
+        map<int, int> res;
+        int cnt=0, needed=0, prefix=0;
+        for(int i=0; i<=nums.size(); ++i) {
+            needed = prefix - k;
+            cnt += res[needed];
+            res[prefix]++;
+            prefix += nums[i];        
+        }
+        return cnt;
+        
+    }

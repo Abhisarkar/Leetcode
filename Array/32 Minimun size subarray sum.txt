@@ -1,0 +1,13 @@
+int minSubArrayLen(int s, vector<int>& nums) {
+        if(nums.empty() || s <= 0) return 0;
+        int i=0, j=0, c=0, sum=0, n=nums.size(), len = INT_MAX;
+        while(j < n) {
+            while(sum < s && j < n)
+                sum += nums[j], j++, c++;
+            while(sum >= s) {
+                len = min(len, c);
+                sum -= nums[i], i++, c--;
+            }                
+        }
+        return len == INT_MAX ? 0 : len;
+    }

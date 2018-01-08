@@ -1,0 +1,7 @@
+ int findPoisonedDuration(vector<int>& t, int d) {
+        if(t.size() == 0) return 0;
+        if(t.size() == 1) return d;
+        int ans = 0;
+        for(int i=1; i<t.size(); ++i) ans += min(t[i] - t[i-1], d);
+        return ans + d;
+    }

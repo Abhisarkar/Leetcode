@@ -1,0 +1,17 @@
+vector<vector<int>> generate(int n) {
+        vector<vector<int>> ans;
+        if(!n) return ans;
+        vector <int> sub_ans(1,1);
+        ans.push_back(sub_ans);
+        for(int i=1;i<n;++i) {
+            sub_ans.clear();
+            for(int j=0;j<=i;++j) {
+                if(j==0 || j==i)
+                    sub_ans.push_back(1);
+                else
+                    sub_ans.push_back(ans[i-1][j]+ans[i-1][j-1]);
+            }
+            ans.push_back(sub_ans);
+        }
+        return ans;
+    }

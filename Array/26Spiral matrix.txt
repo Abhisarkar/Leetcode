@@ -1,0 +1,21 @@
+1. keep 4 variables and modify boundaries. That's it.
+
+vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector <int> ans;
+        if(matrix.empty()) return ans;
+        int rB = 0, rE = matrix.size()-1, cB = 0, cE = matrix[0].size()-1;
+        while( rB <= rE && cB <= cE ) {
+            for(int i=cB; i<=cE; ++i) ans.push_back(matrix[rB][i]);
+            rB++;
+            for(int i=rB; i<=rE; ++i) ans.push_back(matrix[i][cE]);
+            cE--;
+            
+            if(rB > rE || cB > cE) break;//checking boundaries
+            
+            for(int i=cE; i>=cB; --i) ans.push_back(matrix[rE][i]);
+            rE--;
+            for(int i=rE; i>=rB; --i) ans.push_back(matrix[i][cB]);
+            cB++;            
+        }
+        return ans;
+    }

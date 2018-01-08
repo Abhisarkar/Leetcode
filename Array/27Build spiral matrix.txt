@@ -1,0 +1,20 @@
+ vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> matrix(n, vector<int>(n));
+        if(!n) return matrix;
+        int rB = 0, rE = n-1, cB = 0, cE = n-1;
+        int val=1;
+        while( rB <= rE && cB <= cE ) {
+            for(int i=cB; i<=cE; ++i) matrix[rB][i] = val++;
+            rB++;
+            for(int i=rB; i<=rE; ++i) matrix[i][cE] = val++;
+            cE--;
+            
+            if(rB > rE || cB > cE) break;
+            
+            for(int i=cE; i>=cB; --i) matrix[rE][i] = val++;
+            rE--;
+            for(int i=rE; i>=rB; --i) matrix[i][cB] = val++;
+            cB++;            
+        }
+        return matrix;
+    }

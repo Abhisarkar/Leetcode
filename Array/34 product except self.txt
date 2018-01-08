@@ -1,0 +1,12 @@
+Pattern : Calculations from two sides. Two variables keeping track of product from two sides till the next and previous element of the current element.
+
+
+vector<int> productExceptSelf(vector<int>& nums) {        
+        if(nums.empty()) return nums;
+        vector<int> ans(nums.size(),1);
+        int b=1, e=1;
+        for(int i=0; i<nums.size(); ++i) {
+            ans[i] *= b, b *= nums[i], ans[nums.size()-1-i] *= e, e *= nums[nums.size()-1-i];
+        }
+        return ans;
+    }

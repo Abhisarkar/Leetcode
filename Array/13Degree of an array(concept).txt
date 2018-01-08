@@ -1,0 +1,17 @@
+Concept : storing the indexes of the elements in an array to access them later
+useful for finding ranges of some elements.
+done using unorered_map <int, vector<int>> m;
+
+double findMaxAverage(vector<int>& nums, int k) {
+        double ans, newans;
+        double sum=0;
+        if(k <= 0) return 0;
+        for(int i=0; i<k; ++i) sum += nums[i];
+        ans = sum/k;
+        for(int i=k; i<nums.size(); ++i) {
+            sum = sum + nums[i] - nums[i-k];
+            newans = sum/k;
+            ans = ans < newans ? newans : ans;
+        }
+        return ans;
+    }

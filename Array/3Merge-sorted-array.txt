@@ -1,0 +1,9 @@
+ void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        if(m && !n){}
+        else if(!m && n) {nums1 = nums2;}
+       else { int ai = m-1, bi=n-1;
+        for(int i=m+n-1; i>=0; --i) {
+            if(nums1[ai] > nums2[bi] && ai>=0) nums1[i] = nums1[ai--];
+            else if(bi>=0) nums1[i] = nums2[bi--];
+        }}
+    }

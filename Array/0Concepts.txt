@@ -1,0 +1,8 @@
+1. Whenever the value range is in [0, n-1], the O(1) space can be obtained by modifying the array by negating.
+
+2. Whenever the problem involves some SUM concept, it's generally O(n^2) or O(n^3) problem with sorting the data 
+    and looping over the data to find the combinations.
+	problems : #40, #16, #17
+
+3. Backtracking is mostly used tho find combinations when only different combinstions are to be tested and 
+    no sum property is involved.

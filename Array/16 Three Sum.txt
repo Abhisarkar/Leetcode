@@ -1,0 +1,46 @@
+Main Idea : 
+1. sort the array
+2. fix number 1
+3. find combination for number 2 and 3
+4. if found change both the numbers(since if number 2 is kept same then the number 3 will also be same and dups are not allowed).
+5. Duplicate number 1 is also changed.
+
+**********************************************************************************************************
+
+vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> ans;
+        if(nums.empty()) return ans;
+        sort(nums.begin(), nums.end());
+        for(int i=0; i<nums.size(); ++i) {
+            int l = i+1; ////taking range from next number to the last one.
+	int r = nums.size()-1;
+            int target = -nums[i];
+            if(target < 0) break;//the actual number has to be negative, otherwise the greater numbers will not sum to this number (sorted array)
+            while( l < r) {
+                int sum = nums[l] + nums[r];//the numbr 2 and number 3
+                if(sum < target) l++;//adjusting the perfect combination
+                else if(sum > target) r--;
+                else {
+                    vector<int> triplet = {nums[i], nums[l], nums[r]};
+                    ans.push_back(triplet);
+	 //Now different combination is tried keeping the first number same and second third number different.
+                
+                // Processing duplicates of Number 2
+                // Rolling the front pointer to the next different number forwards
+
+
+                    while(l < r && nums[l] == triplet[1]) l++;
+	
+	// Processing duplicates of Number 3
+                // Rolling the back pointer to the next different number backwards
+
+                    while(l < r  && nums[i] == triplet[2]) r--;
+                }
+            }
+	// Processing duplicates of Number 1
+            while(i+1 < nums.size() && nums[i+1] == nums[i]) ++i;
+        }
+        return ans;
+    }
+
+***************************************************************************************************************

@@ -1,0 +1,12 @@
+int findMin(vector<int>& nums) {
+        int l=0, r=nums.size()-1;
+        while(l<r) {
+            if(nums[l] < nums[r]) return nums[l];//if not rotated
+            int mid = l + (r-l) / 2;           
+            if(nums[r] < nums[mid])//mid is the highest element index
+                l = mid+1;
+            else 
+                r = mid;//not mid-1 cause mid can be the minimum element index.
+        }
+        return nums[l];
+    }

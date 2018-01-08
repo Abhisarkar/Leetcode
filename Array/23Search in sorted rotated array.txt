@@ -1,0 +1,24 @@
+Concept : if first part is sorted (till mid)
+	then check in first part , else in second part
+
+	else first part is not sorted (then second part has to be sorted)
+	check in second part, else in first part.
+
+
+int search(vector<int>& nums, int target) {
+        if(nums.empty()) return -1;
+        int lo = 0, hi = nums.size()-1;
+        while( lo < hi ) {
+            int mid = (lo + hi) / 2;
+            if(nums[mid] == target) return mid;
+            if(nums[lo] <= nums[mid]) {//this '=' sign is really important when mid and lo is same
+                if(target >= nums[lo] && target < nums[mid]) hi = mid - 1;//first part is sorted.
+                else lo = mid + 1;
+            }
+            else {
+                if(target > nums[mid] && target <= nums[hi]) lo = mid + 1;//second part is sorted.
+                else hi = mid - 1;
+            }
+        }
+        return target == nums[lo] ? lo : -1;
+    }
