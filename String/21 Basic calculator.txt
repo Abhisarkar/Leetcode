@@ -1,0 +1,26 @@
+Concept: if + or - push, if * or / then operate with the current element and push.
+
+
+ int calculate(string s) {
+        if(s.empty()) return 0;
+        int num=0;
+        char sign ='+';
+        vector<int> ans;
+        for(char ch : s) {
+            if( ch == ' ' ) continue;
+            if( ch >= '0' && ch <= '9' ) num = num*10 + ch - '0';
+            else {
+                if(sign == '+') ans.push_back(num);
+                 if(sign == '-') ans.push_back(-num);//if first sign is - then -0 will be pushed to ans which doesnot matter.
+                 if(sign == '*') ans.back() *= num;
+                else  if(sign == '/') ans.back() /= num;
+                sign = ch, num=0;
+            }
+        }
+//push the last digit
+        if(sign == '+') ans.push_back(num);
+        if(sign == '-') ans.push_back(-num);
+        if(sign == '*') ans.back() *= num;
+        else  if(sign == '/') ans.back() /= num;
+        return accumulate(ans.begin(), ans.end(),0);
+    }

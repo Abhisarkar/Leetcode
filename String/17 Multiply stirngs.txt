@@ -1,0 +1,22 @@
+Concept: 
+1. num[i+j] contains the carry of product of num1[i] ans num2[j].
+2. num[i+j+1] contains the last digit of product of num1[i] ans num2[j].
+
+Tip: Do it in paper.
+
+ string multiply(string num1, string num2) {
+        int n = num1.size(), m = num2.size();
+        int num[n+m] = {0};
+        for(int i = n-1; i >= 0; --i) {
+            for(int j = m-1; j >= 0; --j) {
+                int mul = (num1[i]-'0') * (num2[j]-'0');
+                int p1 = i+j, p2 = i+j+1;
+                int sum = mul + num[p2];//from position p2 previous result is fetched to get current sum.
+                num[p1] += sum / 10;
+                num[p2] =  sum % 10;
+            }
+        }
+        string ans;
+        for(int p : num) if(!(ans.size()==0 &&  p==0))ans.push_back('0'+p); 
+        return ans.empty() ? "0" : ans;
+     }

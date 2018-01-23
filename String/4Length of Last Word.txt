@@ -1,0 +1,7 @@
+ int lengthOfLastWord(string s) {
+        int t = s.length()-1;
+        int len=0;
+        while(t >= 0 && s[t] == ' ') t--;
+        while(t >= 0 && s[t] != ' ') len++, t--;
+        return len;
+    }

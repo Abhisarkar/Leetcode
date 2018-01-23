@@ -1,0 +1,23 @@
+Concept:
+IP address characteristics.
+1. one block max 3 chars.
+2. No block of > 1 size starts with 0.
+3. there are 4 blocks.
+4. the value of each block must be <= 255.
+
+void backtrack(string s, vector<string> &ans, int idx, string res, int cnt) {
+        if(cnt>4) return;
+        if(idx == s.size() && cnt == 4) {ans.push_back(res); return;}
+        for(int i=1; i<4; ++i) {
+            if(idx+i > s.size()) break;
+            string temp = s.substr(idx, i);
+            if((temp[0] == '0' && temp.size() > 1) || ( i == 3 && stoi(temp) > 255) ) continue;
+            backtrack(s, ans, idx + i, res + temp + (cnt == 3 ? "" : "."), cnt+1);
+        }
+    }    
+    
+    vector<string> restoreIpAddresses(string s) {
+        vector <string> ans;
+        backtrack(s,ans,0,"",0);
+        return ans;
+    }

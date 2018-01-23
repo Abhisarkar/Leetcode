@@ -1,0 +1,74 @@
+  O(n) time and space
+|-----------------------|
+
+void reverseWords(string &s) {
+        if(s.empty()) return;
+        int i=0, j=s.length()-1;
+        while(s[i] == ' ') i++;//getting rid of leading and trailing spaces.
+        while(s[j] == ' ') j--;
+        s = s.substr(i, j-i+1);
+        vector<string> vec;
+        string w;
+        for(char ch : s) {
+            if(ch == ' '  && w == "") continue;//in between more than one spaces.
+            if(ch == ' ') {
+                vec.push_back(w);
+                w = "";
+            }
+            else {
+                w += ch;
+            }
+        }
+        vec.push_back(w);
+        reverse(vec.begin(), vec.end());
+        s.clear();
+        for(string str : vec) {
+            s = s + str + ' ';
+        }
+        s = s.substr(0, s.size()-1);
+    }
+
+
+O(n) time O(1) space.
+Concept: 
+1. Keep two pointers.
+2. i is used to ignore whitespaces.
+3. j starts from first and progresses as i progresses(modifying the word from first).
+4. when a word is encountered a lower bound is kept track, then word is added and reversed in the string.
+5. at last the stirng is resized and reversed.
+
+void reverseWords(string &s) {
+       int i=0, j=0, l, f=0;
+       while(1) {
+           while(i < s.size() && s[i] == ' ') i++;
+           if(i == s.size()) break;
+           if(f) s[j++] = ' ';
+           l = j;
+           while(i < s.size() && s[i] != ' ') s[j++] = s[i++];
+           reverse(s.begin()+l, s.begin()+j);
+           f=1;
+       } 
+        s = s.substr(0,j);//gets rid of unnecessary spaces.
+        reverse(s.begin(), s.end());
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

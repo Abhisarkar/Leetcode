@@ -1,0 +1,36 @@
+Approach 1: Key concept is the substring length <= total length/2 and total length must be multiple of the substring length. So we can just check all the lengths which total length is multiple of.
+
+ bool repeatedSubstringPattern(string s) {
+        if(s.empty()) return false;
+        int len = s.size();
+        for(int i = len/2; i >= 1; --i) {
+            if(len % i == 0 ) {
+                int m = len/i;
+                string sub = s.substr(0, i);
+                string t;
+                while(m--) t += sub;
+                if(t == s) return true;
+            }
+        }
+        return false;
+    }	
+
+Approach 2: If we remove a substring of length i from front and append at last and if the resultant string is same as original, then this substring can be used as the building blocks to build the string. (e.g abcabcabc. three same part, first and last part is being checked here.)
+
+ string shift(string &str, int i) {//ager part nia pichone lagaitase thats it.
+        string res = str.substr(i);
+        res += str.substr(0, i);
+        return res;
+    }
+    
+    bool repeatedSubstringPattern(string s) {
+        if(s.empty()) return false;
+        int len = s.size();
+        for(int i = 1; i <= len/2; ++i) {
+            if(len % i == 0 ) {
+               string nxt = shift(s, i);
+               if(nxt == s) return true;
+            }
+        }
+        return false;
+    }

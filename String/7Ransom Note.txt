@@ -1,0 +1,11 @@
+  bool canConstruct(string r, string m) {
+        if(r.empty()) return true;
+        if(m.empty()) return false;
+        map <char, int> map;
+        for(char ch : m) map[ch]++;
+        for(char ch : r) {
+            if(!map[ch]) return false;
+            map[ch]--;
+        }
+        return true;        
+    }

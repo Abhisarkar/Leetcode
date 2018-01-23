@@ -1,0 +1,20 @@
+//simple brute force, solvable using KMP
+
+int strStr(string h, string needle) {
+        int m = h.size(), n = needle.size();
+        if( (!m && !n) || !n) return 0;
+        int c=0;
+        for(int i=0; i<m-n+1; ++i) {
+            int j=0;
+            if(h[i] == needle[j]) {
+                int k=i;
+                while(j < needle.size()) {
+                    if(h[k] == needle[j]) k++, j++;
+                    else break;
+                }
+                if(j == needle.size()) return i;
+        }
+            
+        }
+        return -1;
+    }

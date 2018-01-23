@@ -1,0 +1,16 @@
+Concept: Keep track of the group length of the 0's and 1's and count the number of formable substrings
+
+int countBinarySubstrings(string s) {
+        int prev=0, cur=1, cnt=0;
+        for(int i=1; i<s.size(); ++i) {
+            if(s[i] == s[i-1]) {
+                cur++;
+                if(prev >= cur) cnt++;                
+            }
+            else {
+                cnt++;
+                prev = cur, cur=1;
+            }
+        }
+        return cnt;
+    }

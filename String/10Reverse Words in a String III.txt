@@ -1,0 +1,10 @@
+string reverseWords(string s) {
+        string res, t;
+        for(char ch : s) {
+            if(ch == ' ') res += ' ', reverse(t.begin(), t.end()), res += t, t = "";
+            else t += ch;
+        }
+        res += ' ', reverse(t.begin(), t.end()), res += t;
+        res = res.substr(1);
+        return res;
+    }

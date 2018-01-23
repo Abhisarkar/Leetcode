@@ -1,0 +1,46 @@
+string checkipv6(string s) {
+         string t;
+         s += ':';
+         int c=0;
+         for(char ch : s) {    
+             if( ch != ':' && !(ch >= 'A' && ch <='Z') && !(ch >= 'a' && ch <='z') && !(ch >= '0' && ch <='9') ) return "Neither";
+             if(ch >= 'A' && ch <='Z') {//caps
+                 if( !(ch >= 'A' && ch <= 'F') ) return "Neither";
+             }
+             if(ch >= 'a' && ch <='z') {//small
+                 if( !(ch >= 'a' && ch <= 'f') ) return "Neither";
+             }
+             if(ch == ':') {
+                 c++;                 
+                 if( c > 8 || t.empty() || t.size() > 4 ) return "Neither";
+                 t = "";
+             }
+             else 
+                 t += ch;
+         }
+         return c == 8 ? "IPv6" : "Neither";
+    }
+    string checkipv4(string s) {
+        string t;
+        s.push_back('.');
+        int c=0;
+        for(char ch : s) {
+            if(ch != '.' && !(ch >= '0' && ch <='9')) return "Neither";
+            if(ch == '.') {
+                c++;
+                if( c > 4 || (t.empty() || t.size() > 3) || (t.size() == 3 && stoi(t) > 255 ) || (t.size() > 1 && t[0] == '0') ) return "Neither";
+                t = "";
+            }
+            else
+                t += ch;
+        }       
+        return c == 4 ? "IPv4" : "Neither";
+    }
+    
+    string validIPAddress(string IP) {
+        if(IP.size() == 0) return "Neither";
+        for(char ch : IP) {
+            if(ch == ':') return checkipv6(IP);
+        }
+        return checkipv4(IP);
+    }

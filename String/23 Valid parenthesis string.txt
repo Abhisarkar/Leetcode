@@ -1,0 +1,22 @@
+Concept: 
+1. First priority is given to '(' then '*'.
+2. two stacks are used to store '(' and '*'
+
+bool checkValidString(string s) {
+        if(s.empty()) return true;
+        stack <pair<char, int>> st1, st2;
+        for(int i=0; i<s.size(); ++i) {
+            if(s[i] == '(') st1.push({s[i], i});
+            else if(s[i] == '*') st2.push({s[i], i});
+            else {
+                if(st1.size()) st1.pop();//first '(' pressence is checked.
+                else if(st2.size()) st2.pop();//then '*' is checked.
+                else return false;//')' encountered without previous '(' or '*'
+            }
+        }
+        while(st1.size() && st2.size()) {
+            if(st1.top().second > st2.top().second ) return false;//'(' enountered which do not have any '*' to it's right.
+            st1.pop(); st2.pop();
+        }
+        return st1.empty();
+    }

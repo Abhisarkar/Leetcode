@@ -1,0 +1,22 @@
+Concept: for odd lengths palindromes, set a middle element, cz only one mid element will be present.
+for even length two middle elements.
+time O(n^2), space O(1).
+
+ string longestPalindrome(string s) {
+        if(s.length() < 2) return s;
+        int len=1, l, r, lo=0;
+        string ans;
+        for(int i=1; i<s.size(); ++i) {
+            l=i-1, r=i;//always the middle elements wil be two elements for even length palindromes.
+            while(l>=0 && r<s.size() && s[l]==s[r]) {
+                if(r-l+1 > len) len = r-l+1, lo=l;
+                l--, r++;
+            }
+            l=i-1, r=i+1;//always the middle element wil be ith element.
+            while(l>=0 && r<s.size() && s[l]==s[r]) {
+                if(r-l+1 > len) len = r-l+1, lo=l;
+                l--, r++;
+            }
+        }
+        return s.substr(lo, len);
+    } 

@@ -1,0 +1,24 @@
+Concept: 
+1. find the (low,high) pair from last.
+2. find smallest element > s[low] on right of low.
+3. swap and sort the element right to the low.
+4. return the result.
+5. reverse also works from low+1 to end, then finding the smallest greater > s[low], swapping it and return the result.
+(it's better).
+
+ int nextGreaterElement(int n) {
+        string s = to_string(n);
+        if(s.length() <= 1) return -1;
+        int i;
+        for(i=s.size()-1; i>=1; --i) 
+            if(s[i-1] < s[i]) break;
+        if(!i) return -1;
+        int ind = i-1, small;
+        for(int j=i; j<s.size(); ++j) {
+            if(s[j] > s[ind]) small = j;
+        }
+        swap(s[ind], s[small]);
+        sort(s.begin()+i, s.end());
+        long num = stol(s);
+        return num <= INT_MAX ? num : -1;
+    }
